@@ -1,11 +1,14 @@
 server:
   port: 7070
+  servlet:
+    context-path: /my-blog
 
 spring:
     profiles:
       active: prod
     datasource:
-        url: jdbc:mysql://127.0.0.1:3306/wu_blog?allowMultiQueries=true&amp;characterEncoding=UTF-8
+#        url: jdbc:mysql://127.0.0.1:3306/wu_blog?allowMultiQueries=true&amp;characterEncoding=UTF-8
+        url: jdbc:mysql://120.78.184.12:3306/wu_blog?allowMultiQueries=true&amp;characterEncoding=UTF-8
         username: root
         password: 123456
         driver-class-name: com.mysql.jdbc.Driver
@@ -24,5 +27,7 @@ spring:
         maxOpenPreparedStatements: 20
 mybatis:
   typeAliasesPackage: com.xiaowuu.entity
-  mapperLocations: classpath:mapper/*.xml
+  mapperLocations: classpath:mapper/*/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

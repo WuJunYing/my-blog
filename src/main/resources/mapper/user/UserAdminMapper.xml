@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.ktx.adoption.dao.merchant.MerchantDao" >
+<mapper namespace="com.xiaowuu.dao.user.UserAdminMapper" >
 
     <resultMap id="resultMap" type="com.xiaowuu.entity.user.UserAdmin" >
         <id column="id" property="id" />
@@ -14,4 +14,29 @@
         <result column="create_time" property="createTime"/>
     </resultMap>
 
+    <update id="updateByLogin" parameterType="com.xiaowuu.entity.user.UserAdmin">
+      UPDATE user_admin
+        <set>
+            <if test="lastLoginTime != null and lastLoginTime!=''">
+                last_login_time = #{lastLoginTime},
+            </if>
+            <if test="lastLoginIp != null and lastLoginIp !=''">
+                last_login_ip = #{lastLoginIp},
+            </if>
+        </set>
+      WHERE id =#{id}
+    </update>
+    
+    <select id="findUserByNameAndPsw" resultType="com.xiaowuu.entity.user.UserAdmin">
+        SELECT id , username, password , is_super , last_login_time, last_login_ip
+        FROM user_admin
+        WHERE 1 = 1
+        AND is_deleted = 0
+        <if test="userName != null and userName != ''">
+            AND username =#{userName}
+        </if>
+        <if test="password != null and password != ''">
+            AND password =#{password}
+        </if>
+    </select>
 </mapper>
