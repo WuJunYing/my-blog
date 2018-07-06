@@ -1,0 +1,28 @@
+server:
+  port: 7070
+
+spring:
+    profiles:
+      active: prod
+    datasource:
+        url: jdbc:mysql://127.0.0.1:3306/wu_blog?allowMultiQueries=true&amp;characterEncoding=UTF-8
+        username: root
+        password: 123456
+        driver-class-name: com.mysql.jdbc.Driver
+        type: com.alibaba.druid.pool.DruidDataSource
+        filters: stat
+        maxActive: 20
+        initialSize: 1
+        maxWait: 60000
+        minIdle: 1
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxOpenPreparedStatements: 20
+mybatis:
+  typeAliasesPackage: com.xiaowuu.entity
+  mapperLocations: classpath:mapper/*.xml
+
