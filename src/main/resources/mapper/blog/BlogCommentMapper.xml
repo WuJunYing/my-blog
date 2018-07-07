@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiaowuu.dao.blog.BlogCommentMapper" >
+
+    <resultMap id="resultMap" type="com.xiaowuu.entity.blog.BlogComment" >
+        <id column="id" property="id" />
+        <result column="user_id" property="userId"/>
+        <result column="user_ip" property="userIp"/>
+        <result column="blog_id" property="blogId"/>
+        <result column="content" property="content"/>
+        <result column="comment_time" property="commentTime"/>
+        <result column="username" property="userName"/>
+        <result column="admin_reply" property="adminReply"/>
+        <result column="admin_reply_time" property="adminReplyTime"/>
+        <result column="is_read" property="isRead"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <!-- 复用SQL语句 所有字段 -->
+    <sql id="selectAllField">
+        SELECT A.id,
+        A.user_id,
+        A.user_ip,
+        A.blog_id,
+        A.content,
+        A.comment_time,
+        A.username,
+        A.admin_reply,
+        A.admin_reply_time,
+        A.is_read,
+        A.is_deleted,
+        A.update_time,
+        A.create_time
+        FROM blog_comment A
+        WHERE 1=1
+        AND A.is_deleted = 0
+    </sql>
+
+    <select id="getTodoCommentList" resultMap="resultMap">
+        <include refid="selectAllField"/>
+        AND A.is_read = 0
+    </select>
+
+    <update id="updateBlogComment" parameterType="com.xiaowuu.entity.blog.BlogComment">
+      UPDATE blog_comment
+        <set>
+            <if test="adminReply != null and adminReply!=''">
+                admin_reply = #{adminReply},
+            </if>
+            <if test="adminReplyTime != null and adminReplyTime!=''">
+                admin_reply_time = #{adminReplyTime},
+            </if>
+            <if test="isRead != null">
+                is_read = #{isRead},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+        </set>
+      WHERE id =#{id}
+    </update>
+
+
+</mapper>
