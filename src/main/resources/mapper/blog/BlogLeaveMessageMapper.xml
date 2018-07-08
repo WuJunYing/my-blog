@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.xiaowuu.dao.blog.BlogCommentMapper" >
+<mapper namespace="com.xiaowuu.dao.blog.BlogLeaveMessageMapper" >
 
-    <resultMap id="resultMap" type="com.xiaowuu.entity.blog.BlogComment" >
+    <resultMap id="resultMap" type="com.xiaowuu.entity.blog.BlogLeaveMessage" >
         <id column="id" property="id" />
         <result column="user_id" property="userId"/>
         <result column="user_ip" property="userIp"/>
-        <result column="blog_id" property="blogId"/>
         <result column="content" property="content"/>
-        <result column="comment_time" property="commentTime"/>
+        <result column="message_time" property="messageTime"/>
         <result column="username" property="userName"/>
-        <result column="admin_reply" property="adminReply"/>
-        <result column="admin_reply_time" property="adminReplyTime"/>
         <result column="is_read" property="isRead"/>
         <result column="is_deleted" property="isDeleted"/>
         <result column="update_time" property="updateTime"/>
@@ -23,36 +20,33 @@
         SELECT A.id,
         A.user_id,
         A.user_ip,
-        A.blog_id,
         A.content,
-        A.comment_time,
+        A.message_time,
         A.username,
-        A.admin_reply,
-        A.admin_reply_time,
         A.is_read,
         A.is_deleted,
         A.update_time,
         A.create_time
-        FROM blog_comment A
+        FROM blog_leave_message A
         WHERE 1=1
         AND A.is_deleted = 0
     </sql>
 
-    <!--获取未读评论数-->
-    <select id="getTodoCommentList" resultMap="resultMap">
+    <!--获取未读留言-->
+    <select id="getTodoMessageList" resultMap="resultMap">
         <include refid="selectAllField"/>
         AND A.is_read = 0
         ORDER BY A.create_time DESC
     </select>
 
-    <!--获取总评论数-->
-    <select id="getTotalComment" resultType="integer">
-        SELECT COUNT(*) FROM blog_comment
+    <!--获取总留言数-->
+    <select id="getTotalMessage" resultType="integer">
+        SELECT COUNT(*) FROM blog_leave_message
     </select>
 
-    <!--获取月评论数-->
+    <!--获取月留言数-->
     <select id="getTotalByMonth" resultType="integer">
-        SELECT COUNT(*) FROM blog_comment
+        SELECT COUNT(*) FROM blog_leave_message
         WHERE 1 = 1
         <if test="startTime != null and startTime != ''">
             AND #{startTime} <![CDATA[ <= ]]> create_time
@@ -62,8 +56,8 @@
         </if>
     </select>
 
-    <update id="updateBlogComment" parameterType="com.xiaowuu.entity.blog.BlogComment">
-      UPDATE blog_comment
+    <!--<update id="updateBlogLeaveMessage" parameterType="com.xiaowuu.entity.blog.BlogLeaveMessage">
+      UPDATE blog_leave_message
         <set>
             <if test="adminReply != null and adminReply!=''">
                 admin_reply = #{adminReply},
@@ -79,7 +73,7 @@
             </if>
         </set>
       WHERE id =#{id}
-    </update>
+    </update>-->
 
 
 </mapper>

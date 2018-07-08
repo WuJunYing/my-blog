@@ -17,4 +17,14 @@ public class BlogCommentServiceImpl implements BlogCommentService{
     public List<BlogComment> getTodoCommentList() {
         return blogCommentMapper.getTodoCommentList();
     }
+
+    @Override
+    public int getTotalComment() {
+        return blogCommentMapper.getTotalComment();
+    }
+
+    @Override
+    public int getTotalByMonth(String startTime, String endTime) {
+        return blogCommentMapper.getTotalByMonth(startTime, endTime);
+    }
 }
